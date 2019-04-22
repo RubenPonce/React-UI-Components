@@ -1,1 +1,26 @@
 /* All styles for your header Components live here */
+.header-container{
+    display: flex;
+}
+.header-container .header-title{
+    display: flex;
+    padding: 2% 0;
+    align-content: flex-end;
+}
+.header-container .header-title h1{
+    font-size: 1.2rem;
+
+}
+.header-container .header-title h2{
+    font-size: 1rem;
+    align-self: flex-end;
+    margin: 0 .5em;
+    color: rgb(147, 160, 174);
+}
+.thumbnail{
+    width: 45px;
+    height: 40px;
+    background: #bb1333;
+    border-radius: 50%;
+    margin: 2%;
+}
