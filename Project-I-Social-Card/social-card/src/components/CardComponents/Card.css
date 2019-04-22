@@ -22,6 +22,18 @@
 /* .card-content h1 p a  */
 .card-content h1{
     font-size: 1.2rem;
-    font-weight: 500;
+    font-weight: 550;
     
+}
+.card-content p{
+    font-size: 1.1rem;
+    margin: .5em 0;
+    
+}
+.card-content a{
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: rgb(147, 160, 174);
+    display: block;
+    margin-bottom: .5em;
 }
