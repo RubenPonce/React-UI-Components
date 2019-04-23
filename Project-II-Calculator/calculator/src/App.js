@@ -8,8 +8,10 @@ const App = () => {
     <div>
       <h3>Welcome to React Calculator</h3>
       <div className="app">
-        <CalculatorDisplay />
+      <div className="calculator-container">
+      <CalculatorDisplay />
         <div className="button-container">
+        
           <div className="left">
             <ActionButton action="clear" className="wide-btn" />
             <div className="numbers">
@@ -40,6 +42,7 @@ const App = () => {
           </div>
 
         </div>
+      </div>
       </div>
 
     </div>
