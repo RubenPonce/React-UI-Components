@@ -3,9 +3,10 @@ import './Display.scss';
 
 
 const CalculatorDisplay= (props)=>{
+    console.log(props)
     return(
         <div className="display">
-            <h1>0</h1>
+            <h1>{props.total}</h1>
         </div>
     )
 }
