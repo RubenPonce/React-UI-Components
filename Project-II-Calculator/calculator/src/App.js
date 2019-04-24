@@ -29,7 +29,12 @@ class App extends React.Component {
             total: parseInt(this.state.num1+e.target.textContent),
             num1: parseInt(this.state.num1+e.target.textContent)
           });
-        } 
+        } else{
+          this.setState({
+           total: parseInt( e.target.textContent + this.state.num1)
+          })
+        }
+        
         //when operator is pressed, operates previous button value with the new one.
         if (this.state.operation == "add") {
           this.setState({
