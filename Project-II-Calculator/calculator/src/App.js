@@ -10,84 +10,90 @@ constructor(props){
   this.state= {
     total:0,
     num1:null,
-    num2: null,
     operation:null,
     clear: ()=>{
       this.setState({
-        total: 0
+        total: 0,
+        num1: 0,
       });
       
     },
     setDisplay:(e)=>{
-      if(this.state.total!="0"){
-        this.setState({
-        
-          total: this.state.total+e.target.textContent
-        });
-      }
-      else{
-        this.setState({
-          total: e.target.textContent
-        });
-      }
+        if(this.state.total===0){
+          this.setState({
+            total: parseInt(e.target.textContent),
+            num1: parseInt(e.target.textContent),
+          })
+        } else{
+          this.setState({
+            total: parseInt(e.target.textContent+this.state.num1)
+          })
+        }
+    
+        if(this.state.operation=="add"){
+          this.setState({
+            total:parseInt( e.target.textContent)+this.state.num1,
+            num1:parseInt( e.target.textContent)+this.state.num1
+          })
+        } else if(this.state.operation=="subtract"){
+          this.setState({
+            total:this.state.num1-parseInt( e.target.textContent),
+            num1:this.state.num1 -parseInt( e.target.textContent)
+          })
+        } else if(this.state.operation=="divide"){
+          this.setState({
+            total:this.state.num1/parseFloat( e.target.textContent),
+            num1:this.state.num1/parseFloat( e.target.textContent)
+          })
+        } else if(this.state.operation=="multiply"){
+          this.setState({
+            total:this.state.num1*parseFloat( e.target.textContent),
+            num1:this.state.num1*parseFloat( e.target.textContent)
+          })
+        } 
       
       
-    },
-    setNum1:(e)=>{
-      this.setState({
-        num1: e
-      })
-    },
-    setNum2:(e)=>{
-      this.setState({
-        num1: e
-      })
+      
     },
     
+    
+    add: () => {
+      this.setState({
+        operation: "add",
+      });
+      
+    },
+    subtract: () => {
+      this.setState({
+        operation: "subtract"
+      })
+    },
 
-    divide: (e)=>{
+
+
+    divide: ()=>{
       this.setState({
         operation: "divide",
-        total: e.target.textContent,
-        num1: parseInt(e.target.textContent)
       });
     },
 
     multiply: (e)=>{
       this.setState({
         operation: "multiply",
-        total: e.target.textContent,
-        num1: parseInt(e.target.textContent)
+
       });
       
     },
  
-    add: (e)=>{
-      console.log(e)
-      console.log(this.state.operation)
-      console.log(this.state.num1, this.state.num2)
-      if(this.state.operation===null){
-      this.setState({
-        operation: "add",
-        num1:e.target.textContent,
-        total: ""
-      })
-    }
-    else{
-      this.setState({
-        num2:e.target.textContent,
-        total: (parseInt(this.state.num1)+parseInt(this.state.num2)).toString()
-      })
-    }
-    },
+   
  
-    subtract: (e)=>{
-      this.setState({
-        operation: "subtract",
-        total: e.target.textContent,
-        num1: parseInt(e.target.textContent)
-      });
-    },
+    // subtract: (e)=>{
+    //   this.setState({
+    //     operation: "subtract",
+    //     total: e.target.textContent,
+    //     num1: parseInt(e.target.textContent)
+    //   });
+    // },
 
 
 
