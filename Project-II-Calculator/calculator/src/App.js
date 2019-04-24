@@ -19,16 +19,17 @@ class App extends React.Component {
       },
       
       setDisplay: e => {
-        if (this.state.total === 0) {//if 0, set number to button pressed
+        if (this.state.num1 === null||this.state.num1===0) {//if 0, set number to button pressed
           this.setState({
             total: parseInt(e.target.textContent),
             num1: parseInt(e.target.textContent)
           });
-        } else {
+        } else if(e.target.textContent==='0'){
           this.setState({
-            total: parseInt(e.target.textContent + this.state.num1)
+            total: parseInt(this.state.num1+e.target.textContent),
+            num1: parseInt(this.state.num1+e.target.textContent)
           });
-        }
+        } 
         //when operator is pressed, operates previous button value with the new one.
         if (this.state.operation == "add") {
           this.setState({
@@ -40,15 +41,17 @@ class App extends React.Component {
             total: this.state.num1 - parseInt(e.target.textContent),
             num1: this.state.num1 - parseInt(e.target.textContent)
           });
-        } else if (this.state.operation == "divide") {
+        } else if (this.state.operation == "divide"&&this.state.total!==0) {
           this.setState({
-            total: this.state.num1 / parseFloat(e.target.textContent),
-            num1: this.state.num1 / parseFloat(e.target.textContent)
+            total: this.state.num1 / parseInt(e.target.textContent),
+            num1: this.state.num1 / parseInt(e.target.textContent)
           });
-        } else if (this.state.operation == "multiply") {
+        } else if (this.state.operation == "multiply"&&this.state.total!==0) {
+          console.log(this.state.total)
+          console.log(this.state.num1)
           this.setState({
-            total: this.state.num1 * parseFloat(e.target.textContent),
-            num1: this.state.num1 * parseFloat(e.target.textContent)
+            total: this.state.num1 * parseInt(e.target.textContent),
+            num1: this.state.num1 * parseInt(e.target.textContent)
           });
         }
       },
@@ -108,9 +111,9 @@ class App extends React.Component {
                     <NumberButton text="3" setDisplay={this.state.setDisplay} />
                   </div>
                 </div>
-                <ActionButton
-                  action="0"
-                  className="wide-btn"
+                <NumberButton
+                  text="0"
+                  buttonStyle="wide-btn" 
                   setDisplay={this.state.setDisplay}
                 />
               </div>
@@ -135,7 +138,7 @@ class App extends React.Component {
                   className="btn"
                   method={this.state.add}
                 />
-                <ActionButton action="=" className="btn" />
+                <ActionButton action="=" className="btn" method={this.state.equals} />
               </div>
             </div>
           </div>
