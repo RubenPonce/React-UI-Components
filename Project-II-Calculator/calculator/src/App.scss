@@ -4,13 +4,49 @@
     
     
 }
+.big-header{
+    font-size: 4em;
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    margin: 1em auto;
+    font-weight: 300;
+    animation-name: fadeIn;
+    animation-duration: 2s;
+    @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        
+        100% {
+          opacity: 1;
+        }
+      }
+}
+.app{
+    opacity: 0;
+    animation-name: fadeInCalc;
+    animation-delay: 1s;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    @keyframes fadeInCalc {
+        0% {
+          opacity: 0;
+        }
+        
+        100% {
+          opacity: 1;
+        }
+      }
+}
 .calculator-container{
 width: 28.125rem+9.375rem;
 display: flex;
 flex-direction: column;
-margin: 0 auto;
+margin: 4em auto;
 
 box-shadow: 0px 0px 20px 0px #aaa;
+animation-name: fadeInCalc;
+
 .display{
     background: black;
 

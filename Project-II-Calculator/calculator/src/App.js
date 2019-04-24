@@ -17,8 +17,9 @@ class App extends React.Component {
           num1: 0
         });
       },
+      
       setDisplay: e => {
-        if (this.state.total === 0) {
+        if (this.state.total === 0) {//if 0, set number to button pressed
           this.setState({
             total: parseInt(e.target.textContent),
             num1: parseInt(e.target.textContent)
@@ -28,7 +29,7 @@ class App extends React.Component {
             total: parseInt(e.target.textContent + this.state.num1)
           });
         }
-
+        //when operator is pressed, operates previous button value with the new one.
         if (this.state.operation == "add") {
           this.setState({
             total: parseInt(e.target.textContent) + this.state.num1,
@@ -79,7 +80,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h3>Welcome to React Calculator</h3>
+        <h3 className="big-header">Ruben's 🔥 Calculator </h3>
         <div className="app">
           <div className="calculator-container">
             <CalculatorDisplay total={this.state.total} />
