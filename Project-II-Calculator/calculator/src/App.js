@@ -1,23 +1,156 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.scss";
+import NumberButton from "./components/ButtonComponents/NumberButton";
+import ActionButton from "./components/ButtonComponents/ActionButton";
+import CalculatorDisplay from "./components/DisplayComponents/CalculatorDisplay";
+class App extends React.Component {
+  constructor(props) {
+    super(props);
 
-const App = () => {
-  return (
-    <div>
-      <h3>Welcome to React Calculator</h3>
-      <p>
-        We have given you a starter project. You'll want to build out your
-        components in their respective files, remove this code and replace it
-        with the proper components.
-      </p>
-      <p>
-        <strong>
-          Don't forget to `default export` your components and import them here
-          inside of this file in order to make them work.
-        </strong>
-      </p>
-    </div>
-  );
-};
+    this.state = {
+      total: 0,
+      num1: null,
+      operation: null,
+      clear: () => {
+        this.setState({
+          total: 0,
+          num1: 0
+        });
+      },
+      
+      setDisplay: e => {
+        if (this.state.num1 === null||this.state.num1===0) {//if 0, set number to button pressed
+          this.setState({
+            total: parseInt(e.target.textContent),
+            num1: parseInt(e.target.textContent)
+          });
+        } else if(e.target.textContent==='0'){
+          this.setState({
+            total: parseInt(this.state.num1+e.target.textContent),
+            num1: parseInt(this.state.num1+e.target.textContent)
+          });
+        } else{
+          this.setState({
+           total: parseInt( e.target.textContent + this.state.num1)
+          })
+        }
+        
+        //when operator is pressed, operates previous button value with the new one.
+        if (this.state.operation == "add") {
+          this.setState({
+            total: parseInt(e.target.textContent) + this.state.num1,
+            num1: parseInt(e.target.textContent) + this.state.num1
+          });
+        } else if (this.state.operation == "subtract") {
+          this.setState({
+            total: this.state.num1 - parseInt(e.target.textContent),
+            num1: this.state.num1 - parseInt(e.target.textContent)
+          });
+        } else if (this.state.operation == "divide"&&this.state.total!==0) {
+          this.setState({
+            total: this.state.num1 / parseInt(e.target.textContent),
+            num1: this.state.num1 / parseInt(e.target.textContent)
+          });
+        } else if (this.state.operation == "multiply"&&this.state.total!==0) {
+          console.log(this.state.total)
+          console.log(this.state.num1)
+          this.setState({
+            total: this.state.num1 * parseInt(e.target.textContent),
+            num1: this.state.num1 * parseInt(e.target.textContent)
+          });
+        }
+      },
+
+      add: () => {
+        this.setState({
+          operation: "add"
+        });
+      },
+      subtract: () => {
+        this.setState({
+          operation: "subtract"
+        });
+      },
+
+      divide: () => {
+        this.setState({
+          operation: "divide"
+        });
+      },
+
+      multiply: e => {
+        this.setState({
+          operation: "multiply"
+        });
+      }
+    };
+  }
+  render() {
+    return (
+      <div>
+        <h3 className="big-header">Ruben's 🔥 Calculator </h3>
+        <div className="app">
+          <div className="calculator-container">
+            <CalculatorDisplay total={this.state.total} />
+            <div className="button-container">
+              <div className="left">
+                <ActionButton
+                  action="clear"
+                  className="wide-btn"
+                  method={this.state.clear}
+                />
+                <div className="numbers">
+                  <div className="row">
+                    <NumberButton text="7" setDisplay={this.state.setDisplay} />
+                    <NumberButton text="8" setDisplay={this.state.setDisplay} />
+                    <NumberButton text="9" setDisplay={this.state.setDisplay} />
+                  </div>
+                  <div className="row">
+                    <NumberButton text="4" setDisplay={this.state.setDisplay} />
+                    <NumberButton text="5" setDisplay={this.state.setDisplay} />
+                    <NumberButton text="6" setDisplay={this.state.setDisplay} />
+                  </div>
+                  <div className="row">
+                    <NumberButton text="1" setDisplay={this.state.setDisplay} />
+                    <NumberButton text="2" setDisplay={this.state.setDisplay} />
+                    <NumberButton text="3" setDisplay={this.state.setDisplay} />
+                  </div>
+                </div>
+                <NumberButton
+                  text="0"
+                  buttonStyle="wide-btn" 
+                  setDisplay={this.state.setDisplay}
+                />
+              </div>
+              <div className="right">
+                <ActionButton
+                  action="÷"
+                  className="btn"
+                  method={this.state.divide}
+                />
+                <ActionButton
+                  action="×"
+                  className="btn"
+                  method={this.state.multiply}
+                />
+                <ActionButton
+                  action="-"
+                  className="btn"
+                  method={this.state.subtract}
+                />
+                <ActionButton
+                  action="+"
+                  className="btn"
+                  method={this.state.add}
+                />
+                <ActionButton action="=" className="btn" method={this.state.equals} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
 
 export default App;
