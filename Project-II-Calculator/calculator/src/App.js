@@ -1,4 +1,4 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 import "./App.scss";
 import NumberButton from "./components/ButtonComponents/NumberButton";
 import ActionButton from "./components/ButtonComponents/ActionButton";
@@ -11,8 +11,8 @@ class App extends Component {
       num1: null,
       operation: null,
       operationWasPressed: false,
-  }
-    
+    }
+
   }
   clear = () => {
     this.setState({
@@ -21,44 +21,51 @@ class App extends Component {
       num2: '0'
     });
   }
-  looseJsonParse= (obj)=>{
-   return Function('"use strict";return (' + obj + ')')();
+  looseJsonParse = (obj) => {
+    return Function('"use strict";return (' + obj + ')')();
   }
 
-  setDisplay= (e)=>{
+  setDisplay = (e) => {
     //on first click. Set display to number
     //on second click, either '=' or 'operation' or 'number' 
     // set display to number, create new operation, or concantenate 'number'(goes back to 'second click').
     const numberPressed = e.target.textContent;
     console.log(this.looseJsonParse('5+5'))
     //first case
-    if(this.state.total=== '0'){
+    if (this.state.total === '0') {
       this.setState({
         total: numberPressed
       })
-    } else if(this.state.total!=='0'&& !this.state.operationWasPressed){ //second case 
-      this.setState((prevState)=>({
-        total: prevState.total+numberPressed 
+    } else if (this.state.total !== '0' && !this.state.operationWasPressed) { //second case 
+      this.setState((prevState) => ({
+        total: prevState.total + numberPressed
       }))
     }
-    if(this.state.operationWasPressed){//when operation is pressed, reset operation to false and compute operation
-      this.setState(prevState=>({
+    if (this.state.operationWasPressed) {//when operation is pressed, reset operation to false and compute operation
+      this.setState(prevState => ({
         operationWasPressed: false,
-        total: prevState.total+this.state.operation+numberPressed
+        total: prevState.total + this.state.operation + numberPressed
       }))
-      
-    }  
+
+    }
+  }
+  clear = () => {
+    this.setState({
+      total: '0',
+      num1: null,
+      operation: null,
+      operationWasPressed: false,
+    })
   }
 
-
-  equals= ()=>{
+  equals = () => {
     //if there is an operation to preform, return the total
     //if there is a number to display, return the number to total
     this.setState({
       total: this.looseJsonParse(this.state.total).toString()
     })
   }
-  setOperation= (text)=>{
+  setOperation = (text) => {
     const operation = text;
     console.log(operation)
     this.setState({
@@ -79,7 +86,7 @@ class App extends Component {
                 <ActionButton
                   action="clear"
                   className="wide-btn"
-                  method={this.state.clear}
+                  setOperation={this.clear}
                   text="0"
                 />
                 <div className="numbers">
@@ -101,9 +108,9 @@ class App extends Component {
                 </div>
                 <NumberButton
                   text="0"
-                  buttonStyle="wide-btn" 
+                  buttonStyle="wide-btn"
                   setDisplay={this.setDisplay}
-                  
+
                 />
               </div>
               <div className="right">
@@ -131,7 +138,7 @@ class App extends Component {
                   setOperation={this.setOperation}
                   text="+"
                 />
-                <ActionButton action="=" className="btn" text="=" setOperation={this.equals}/>
+                <ActionButton action="=" className="btn" text="=" setOperation={this.equals} />
               </div>
             </div>
           </div>
