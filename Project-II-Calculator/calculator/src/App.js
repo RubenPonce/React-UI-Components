@@ -1,94 +1,47 @@
-import React from "react";
+import React,{Component} from "react";
 import "./App.scss";
 import NumberButton from "./components/ButtonComponents/NumberButton";
 import ActionButton from "./components/ButtonComponents/ActionButton";
 import CalculatorDisplay from "./components/DisplayComponents/CalculatorDisplay";
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-
+class App extends Component {
+  constructor() {
+    super();
     this.state = {
       total: 0,
       num1: null,
       operation: null,
-      clear: () => {
-        this.setState({
-          total: 0,
-          num1: 0
-        });
-      },
-      
-      setDisplay: e => {
-        if (this.state.num1 === null||this.state.num1===0) {//if 0, set number to button pressed
-          this.setState({
-            total: parseInt(e.target.textContent),
-            num1: parseInt(e.target.textContent)
-          });
-        } else if(e.target.textContent==='0'){
-          this.setState({
-            total: parseInt(this.state.num1+e.target.textContent),
-            num1: parseInt(this.state.num1+e.target.textContent)
-          });
-        } else{
-          this.setState({
-           total: parseInt( e.target.textContent + this.state.num1)
-          })
-        }
-        
-        //when operator is pressed, operates previous button value with the new one.
-        if (this.state.operation == "add") {
-          this.setState({
-            total: parseInt(e.target.textContent) + this.state.num1,
-            num1: parseInt(e.target.textContent) + this.state.num1
-          });
-        } else if (this.state.operation == "subtract") {
-          this.setState({
-            total: this.state.num1 - parseInt(e.target.textContent),
-            num1: this.state.num1 - parseInt(e.target.textContent)
-          });
-        } else if (this.state.operation == "divide"&&this.state.total!==0) {
-          this.setState({
-            total: this.state.num1 / parseInt(e.target.textContent),
-            num1: this.state.num1 / parseInt(e.target.textContent)
-          });
-        } else if (this.state.operation == "multiply"&&this.state.total!==0) {
-          console.log(this.state.total)
-          console.log(this.state.num1)
-          this.setState({
-            total: this.state.num1 * parseInt(e.target.textContent),
-            num1: this.state.num1 * parseInt(e.target.textContent)
-          });
-        }
-      },
-
-      add: () => {
-        this.setState({
-          operation: "add"
-        });
-      },
-      subtract: () => {
-        this.setState({
-          operation: "subtract"
-        });
-      },
-
-      divide: () => {
-        this.setState({
-          operation: "divide"
-        });
-      },
-
-      multiply: e => {
-        this.setState({
-          operation: "multiply"
-        });
-      }
-    };
   }
+    
+  }
+  clear = () => {
+    this.setState({
+      total: 0,
+      num1: 0,
+      num2: 0
+    });
+  }
+  looseJsonParse= (obj)=>{
+   return Function('"use strict";return (' + obj + ')')();
+  }
+
+  setDisplay= (e)=>{
+    //on first click. Set display to number
+    //on second click, either '=' or 'operation' or 'number' 
+    // set display to number, create new operation, or concantenate 'number'(goes back to 'second click').
+  }
+
+  equals= ()=>{
+    //if there is an operation to preform, return the total
+    //if there is a number to display, return the number to total
+  }
+  operation= ()=>{
+    //preform operation looseJsonParse()
+  }
+
   render() {
     return (
       <div>
-        <h3 className="big-header">Ruben's 🔥 Calculator </h3>
+        <h3 className="big-header">Ruben's <span role="img" aria-label="fire emoji">🔥</span> Calculator </h3>
         <div className="app">
           <div className="calculator-container">
             <CalculatorDisplay total={this.state.total} />
@@ -101,25 +54,25 @@ class App extends React.Component {
                 />
                 <div className="numbers">
                   <div className="row">
-                    <NumberButton text="7" setDisplay={this.state.setDisplay} />
-                    <NumberButton text="8" setDisplay={this.state.setDisplay} />
-                    <NumberButton text="9" setDisplay={this.state.setDisplay} />
+                    <NumberButton text="7" setDisplay={this.setDisplay} />
+                    <NumberButton text="8" setDisplay={this.setDisplay} />
+                    <NumberButton text="9" setDisplay={this.setDisplay} />
                   </div>
                   <div className="row">
-                    <NumberButton text="4" setDisplay={this.state.setDisplay} />
-                    <NumberButton text="5" setDisplay={this.state.setDisplay} />
-                    <NumberButton text="6" setDisplay={this.state.setDisplay} />
+                    <NumberButton text="4" setDisplay={this.setDisplay} />
+                    <NumberButton text="5" setDisplay={this.setDisplay} />
+                    <NumberButton text="6" setDisplay={this.setDisplay} />
                   </div>
                   <div className="row">
-                    <NumberButton text="1" setDisplay={this.state.setDisplay} />
-                    <NumberButton text="2" setDisplay={this.state.setDisplay} />
-                    <NumberButton text="3" setDisplay={this.state.setDisplay} />
+                    <NumberButton text="1" setDisplay={this.setDisplay} />
+                    <NumberButton text="2" setDisplay={this.setDisplay} />
+                    <NumberButton text="3" setDisplay={this.setDisplay} />
                   </div>
                 </div>
                 <NumberButton
                   text="0"
                   buttonStyle="wide-btn" 
-                  setDisplay={this.state.setDisplay}
+                  setDisplay={this.setDisplay}
                 />
               </div>
               <div className="right">
@@ -151,6 +104,7 @@ class App extends React.Component {
       </div>
     );
   }
+
 }
 
 export default App;
