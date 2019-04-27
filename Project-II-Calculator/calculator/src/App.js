@@ -7,17 +7,18 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      total: 0,
+      total: '0',
       num1: null,
       operation: null,
+      operationWasPressed: false,
   }
     
   }
   clear = () => {
     this.setState({
-      total: 0,
-      num1: 0,
-      num2: 0
+      total: '0',
+      num1: '0',
+      num2: '0'
     });
   }
   looseJsonParse= (obj)=>{
@@ -28,14 +29,42 @@ class App extends Component {
     //on first click. Set display to number
     //on second click, either '=' or 'operation' or 'number' 
     // set display to number, create new operation, or concantenate 'number'(goes back to 'second click').
+    const numberPressed = e.target.textContent;
+    console.log(this.looseJsonParse('5+5'))
+    //first case
+    if(this.state.total=== '0'){
+      this.setState({
+        total: numberPressed
+      })
+    } else if(this.state.total!=='0'&& !this.state.operationWasPressed){ //second case 
+      this.setState((prevState)=>({
+        total: prevState.total+numberPressed 
+      }))
+    }
+    if(this.state.operationWasPressed){//when operation is pressed, reset operation to false and compute operation
+      this.setState(prevState=>({
+        operationWasPressed: false,
+        total: prevState.total+this.state.operation+numberPressed
+      }))
+      
+    }  
   }
+
 
   equals= ()=>{
     //if there is an operation to preform, return the total
     //if there is a number to display, return the number to total
+    this.setState({
+      total: this.looseJsonParse(this.state.total).toString()
+    })
   }
-  operation= ()=>{
-    //preform operation looseJsonParse()
+  setOperation= (text)=>{
+    const operation = text;
+    console.log(operation)
+    this.setState({
+      operation: operation,
+      operationWasPressed: true
+    })
   }
 
   render() {
@@ -51,6 +80,7 @@ class App extends Component {
                   action="clear"
                   className="wide-btn"
                   method={this.state.clear}
+                  text="0"
                 />
                 <div className="numbers">
                   <div className="row">
@@ -73,30 +103,35 @@ class App extends Component {
                   text="0"
                   buttonStyle="wide-btn" 
                   setDisplay={this.setDisplay}
+                  
                 />
               </div>
               <div className="right">
                 <ActionButton
                   action="÷"
                   className="btn"
-                  method={this.state.divide}
+                  setOperation={this.setOperation}
+                  text="/"
                 />
                 <ActionButton
                   action="×"
                   className="btn"
-                  method={this.state.multiply}
+                  setOperation={this.setOperation}
+                  text="*"
                 />
                 <ActionButton
                   action="-"
                   className="btn"
-                  method={this.state.subtract}
+                  setOperation={this.setOperation}
+                  text="-"
                 />
                 <ActionButton
                   action="+"
                   className="btn"
-                  method={this.state.add}
+                  setOperation={this.setOperation}
+                  text="+"
                 />
-                <ActionButton action="=" className="btn" method={this.state.equals} />
+                <ActionButton action="=" className="btn" text="=" setOperation={this.equals}/>
               </div>
             </div>
           </div>
